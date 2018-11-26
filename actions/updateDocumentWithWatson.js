@@ -53,7 +53,8 @@ function updateDocument(watsonResult,id) {
         let mydb = cloudant.db.use(dbNameProcessed);
         var doc = {};
         doc._id = id
-        doc.watsonResults = watsonResult.images[0].classifiers;
+        //doc.watsonResults = watsonResult.images[0].classifiers;
+        doc.watsonResults = watsonResult;　//added
         mydb.insert(doc, function(err,body) {
             if (err) {
                 reject(err);
