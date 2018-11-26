@@ -36,7 +36,7 @@ async function processImageToWatson(data,id,apikey) {
     for (var i = 0; i < lang.length; i++){
         result = await classifyImage(data, id, lang[i],visualRecognition)
         .catch(function(err) {
-            reject(err)
+            return(err)
           });
         watsonResult[lang[i]]= result.images[0].classifiers;    
     }
