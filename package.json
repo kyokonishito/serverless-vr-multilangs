@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/AnthonyAmanse/serverless-image-recognition#readme",
   "devDependencies": {
-    "electron": "^2.0.8"
+    "electron": "^2.0.8",
+    "electron-in-page-search": "^1.3.2"
   }
 }

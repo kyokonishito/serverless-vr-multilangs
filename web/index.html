@@ -9,6 +9,28 @@
   <link rel="stylesheet" href="stylesheets/header.css">
   <link rel="stylesheet" href="stylesheets/images.css">
   <link rel="stylesheet" href="stylesheets/uploadSection.css">
+  <style>
+    
+    .electron-in-page-search-window {
+      position: fixed;
+      top: 0;
+      right: 0;
+      border: solid grey 1px;
+      background-color: white;
+      width: 300px;
+      height: 36px;
+    }
+  
+   
+    .search-inactive {
+      visibility: hidden;
+    }
+  
+   
+    .search-active {
+      visibility: visible;
+    }
+  </style>
 </head>
 
 <body>
@@ -62,3 +84,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="scripts/upload.js"></script>
 <script src="scripts/loadImages.js"></script>
+<script>
+  const searchInPage = nodeRequire('electron-in-page-search').default;
+  const remote = nodeRequire('electron').remote;
+
+  const inPageSearch = searchInPage(remote.getCurrentWebContents());
+  
+  document.getElementById('trigger-search').addEventListener('click', () => {
+      inPageSearch.openSearchWindow();
+  });
+
+  window.addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.keyCode === 70) {
+          inPageSearch.openSearchWindow();
+      }
+  }, false);
+</script>
