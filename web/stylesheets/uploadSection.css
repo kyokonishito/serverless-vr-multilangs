@@ -23,7 +23,7 @@
   margin-bottom: 10px;
 }
 
-.uploadImage {
+label, .uploadImage {
   font-size: 12pt;
   -webkit-border-radius: 28;
   -moz-border-radius: 28;
@@ -36,7 +36,7 @@
   padding: 10px 20px 10px 20px;
 }
 
-.uploadImage:hover {
+label:hover, .uploadImage:hover {
   background: #ffffff;
   color: #cda9a9;
   border: 1px solid;
@@ -47,7 +47,7 @@
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db); */
 }
 
-.uploadImage:active {
+label:active, .uploadImage:active {
   background: #cda9a9;
   color: #fff;
   border: 1px solid;
@@ -57,4 +57,36 @@
   background-image: -ms-linear-gradient(top, #3cb0dd, #3cb0dd);
   background-image: -o-linear-gradient(top, #3cb0dd, #3cb0dd);
   background-image: linear-gradient(to bottom, #3cb0dd, #3cb0dd); */
+}
+
+.openSearch {
+  font-size: 12pt;
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  color: #ffffff;
+  background: #c29fa0;
+  box-shadow: none;
+  border: 1px solid;
+  border-color: #c29fa0;
+  padding: 10px 20px 10px 20px;
+  float: right;
+}
+
+.openSearch:hover {
+  background: #ffffff;
+  color: #cda9a9;
+  border: 1px solid;  
+}
+
+.openSearch:active {
+  background: #cda9a9;
+  color: #fff;
+  border: 1px solid;
+  border-color: #c29fa0;  
+}
+
+select, .filename {
+  font-size: 16pt;
+  border: 1px;
 }

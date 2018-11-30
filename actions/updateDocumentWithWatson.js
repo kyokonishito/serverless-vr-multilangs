@@ -36,16 +36,16 @@ async function processImageToWatson(data,id,apikey) {
     for (var i = 0; i < lang.length; i++){
         result = await classifyImage(data, id, lang[i],visualRecognition)
         .catch(function(err) {
-            return(err)
+            return err;
           });
         watsonResult[lang[i]]= result.images[0].classifiers;    
     }
 
     result = await updateDocument(watsonResult,id)
     .catch(function(err) {
-        return(err)
+        return err;
     });
-    return(result); 
+    return result; 
 }
 
 function updateDocument(watsonResult,id) {

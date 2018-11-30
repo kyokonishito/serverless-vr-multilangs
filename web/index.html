@@ -10,23 +10,32 @@
   <link rel="stylesheet" href="stylesheets/images.css">
   <link rel="stylesheet" href="stylesheets/uploadSection.css">
   <style>
-    
+    /*
+      * .electron-in-page-search-window is a class specified to default
+      * <webview> element for search window.
+      */
     .electron-in-page-search-window {
       position: fixed;
       top: 0;
       right: 0;
       border: solid grey 1px;
-      background-color: white;
-      width: 300px;
-      height: 36px;
+      background-color: #785589;
+      width: 330px;
+      height:  50px;
     }
-  
-   
+     
+    /*
+      * .search-inactive is added to search window <webview> when the window
+      * is inactive.
+      */
     .search-inactive {
       visibility: hidden;
     }
   
-   
+    /*
+      * .search-inactive is added to search window <webview> when the window
+      * is active.
+      */
     .search-active {
       visibility: visible;
     }
@@ -36,21 +45,40 @@
 <body>
   <!-- Header -->
   <div class="header">
+    <br/>
+    <input class="openSearch" type="button" id="trigger-search" value="Open Search Window" />
+  
     <div class="title">
       Watson Eye
     </div>
-    <input class="uploadImage" type="button" id="trigger-search" value="Search Tags"/>
+  
   </div>
 
   <!-- Upload section -->
   <div class="uploadSection">
-    <form class="uploadForm" method="post" name="upload" enctype="multipart/form-data" action="">
-      <input class="selectImage" id="selectImage" type="file" name="myImage" accept="image/*" />
-      <input class="uploadImage" id="uploadImage" type="submit" value="Upload" />
+    <table>
+      <form class="uploadForm" method="post" name="upload" enctype="multipart/form-data" action="">
+        <tr>
+          <td>
+            <label>
+              Choose file
+              <input class="uploadImage" id="selectImage" type="file" name="myImage" accept="image/*" style="display:none"
+                onchange="OnButtonChange();" />
+            </label>
+          </td>
+          <td>
+            <div class="filename" , id="filename"></div>
+          </td>
+        </tr>
+    </table>
+    <br />
+    <input class="uploadImage" id="uploadImage" type="submit" value="Upload" />
     </form>
+    <br />
+    <br />
     <!-- Start Select Language -->
     <form class="changeLangForm" method="post" name="changelang" enctype="form-data" action="">
-        <select name="lang" id="lang">
+      <select name="lang" id="lang">
         <option value="en">English</option>
         <option value="ar">Arabic</option>
         <option value="de">German</option>
@@ -60,20 +88,21 @@
         <option value="ja">Japanese</option>
         <option value="ko">Korean</option>
         <option value="pt-br">Portuguese(Brazil)</option>
-        <option value="zh-cn">Chinese (Simplified, PRC)</option>
-        <option value="zh-tw">Chinese (Traditional, Taiwan)</option>        
+        <option value="zh-cn">Simplified Chinese</option>
+        <option value="zh-tw">Traditional Chinese</option>
       </select>
-      <br/>
-      <input class="uploadImage" id="chnageLang" type="submit" value="ChangeLang" />
+
+      <input class="uploadImage" id="chnageLang" type="submit" value="Change Language" />
     </form>
     <!-- End Select Language -->
-    
   </div>
+  <br />
 
   <!-- Content of page -->
   <div class="uploadedImages" id="uploadedImages">
   </div>
 </body>
+
 </html>
 <script>
   window.nodeRequire = require;
@@ -86,18 +115,38 @@
 <script src="scripts/upload.js"></script>
 <script src="scripts/loadImages.js"></script>
 <script>
+  const path = nodeRequire('path');
+
+  // Retrieve the electron in page search module
   const searchInPage = nodeRequire('electron-in-page-search').default;
   const remote = nodeRequire('electron').remote;
+ 
+  // Create an instance with the current window
+  const inPageSearch = searchInPage(remote.getCurrentWebContents(), {
+    customCssPath: path.join(__dirname, 'stylesheets/electron-search.css')
+  }); 
 
-  const inPageSearch = searchInPage(remote.getCurrentWebContents());
-  
+  // Attach an event listener to open the search menu
   document.getElementById('trigger-search').addEventListener('click', () => {
       inPageSearch.openSearchWindow();
   });
 
+  // Alternatively add the key event listener [CTRL+F]
   window.addEventListener("keydown", (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.keyCode === 70) {
-          inPageSearch.openSearchWindow();
-      }
+    if ((e.ctrlKey || e.metaKey) && e.keyCode === 70) {
+      inPageSearch.openSearchWindow();
+    }
   }, false);
+
+  document.getElementById('filename').innerHTML = "No file chosen"
+
+  function OnButtonChange() {
+    var fileRef = document.getElementById('selectImage');
+    var outFrame = document.getElementById('filename');
+
+    for (i = 0; i < fileRef.files.length; i++) {
+      outFrame.innerHTML = fileRef.files[i].name + "<br/>";
+    }
+
+  }
 </script>
