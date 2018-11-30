@@ -9,5 +9,8 @@
 
 .title {
   color: #fff;
-  font-size: calc(34pt + 1.5vw);
+  font-size: 36pt;
+  position: absolute; 
+  top: 40px;
+  left: 5vw;
 }
